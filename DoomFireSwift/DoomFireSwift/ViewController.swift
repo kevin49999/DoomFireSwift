@@ -14,6 +14,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - Properties
+    
     let fireWidth = 40
     let fireHeight = 40
     let multiplier = 8 // fireWidth * multipler = fireView.bounds.width
@@ -64,6 +66,8 @@ class ViewController: UIViewController {
         0xFF,0xFF,0xFF
     ]
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         populateColorPallete()
@@ -81,8 +85,8 @@ class ViewController: UIViewController {
     func populateColorPallete() {
         for i in 0..<rgbs.count / 3 {
             colorPalette[i] = ["r" : rgbs[i * 3 + 0],
-                          "g" : rgbs[i * 3 + 1],
-                          "b" : rgbs[i * 3 + 2]]
+                               "g" : rgbs[i * 3 + 1],
+                               "b" : rgbs[i * 3 + 2]]
         }
     }
     
@@ -94,7 +98,7 @@ class ViewController: UIViewController {
         
         // "Set bottom line to 37 (color white: 0xFF,0xFF,0xFF)"
         for i in 0..<fireWidth {
-            firePixels[(fireHeight - 1)*fireWidth + i] = 36
+            firePixels[(fireHeight - 1) * fireWidth + i] = 36
         }
     }
     
@@ -129,15 +133,18 @@ class ViewController: UIViewController {
     func drawScreen() {
         for x in 0..<fireWidth {
             for y in 0..<fireHeight {
-                guard let colorIndex = firePixels[y * fireWidth + x] else {
-                    break
+                guard let colorIndex = firePixels[y * fireWidth + x],
+                    let pixel = colorPalette[colorIndex],
+                    let r = pixel["r"],
+                    let g = pixel["g"],
+                    let b = pixel["b"] else {
+                        break
                 }
-                var pixel = colorPalette[colorIndex]
                 
-                let r = Double(pixel!["r"]!)
-                let g = Double(pixel!["g"]!)
-                let b = Double(pixel!["b"]!)
-                let color = UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1.0)
+                let color = UIColor(red: CGFloat(Double(r) / 255),
+                                    green: CGFloat(Double(g) / 255),
+                                    blue: CGFloat(Double(b) / 255),
+                                    alpha: 1.0)
                 
                 ///https://stackoverflow.com/questions/2395650/fastest-way-to-draw-a-screen-buffer-on-the-iphone
                 /*"The fastest App Store approved way to do CPU-only 2D graphics is to create a CGImage backed by a buffer using CGDataProviderCreateDirect and assign that to a CALayer's contents property.
@@ -165,4 +172,3 @@ class ViewController: UIViewController {
         }
     }
 }
-
