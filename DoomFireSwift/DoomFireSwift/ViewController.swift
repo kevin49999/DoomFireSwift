@@ -14,13 +14,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let FIRE_WIDTH = 40
-    let FIRE_HEIGHT = 40 // magic..
+    let fireWidth = 40
+    let fireHeight = 40
+    let multiplier = 8 // fireWidth * multipler = fireView.bounds.width
     
     @IBOutlet weak private var fireView: UIView!
     
     var pixelViews = [Int: UIView]()
-    var palette = [Int: [String: Int]]()
+    var colorPalette = [Int: [String: Int]]()
     var firePixels = [Int: Int]()
     
     var rgbs: [Int] = [
@@ -65,44 +66,44 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        populatePallete()
-        setup()
-        drawView()
+        populateColorPallete()
+        setupFirePixels()
+        drawScreen()
         
-        let _ = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { _ in
             self.doFire()
-            self.drawView()
+            self.drawScreen()
         })
     }
     
     // MARK: - Setup
     
-    func populatePallete() {
+    func populateColorPallete() {
         for i in 0..<rgbs.count / 3 {
-            palette[i] = ["r" : rgbs[i * 3 + 0],
+            colorPalette[i] = ["r" : rgbs[i * 3 + 0],
                           "g" : rgbs[i * 3 + 1],
                           "b" : rgbs[i * 3 + 2]]
         }
     }
     
-    func setup() {
-        /// "Set whole screen to 0" (color: 0x07,0x07,0x07)
-        for i in 0..<FIRE_WIDTH * FIRE_HEIGHT {
+    func setupFirePixels() {
+        /// "Set whole screen to 0 (color: 0x07,0x07,0x07)"
+        for i in 0..<fireWidth * fireHeight {
             firePixels[i] = 0
         }
         
-        // "Set bottom line to 37 (color white: 0xFF,0xFF,0xFF)
-        for i in 0..<FIRE_WIDTH {
-            firePixels[(FIRE_HEIGHT - 1)*FIRE_WIDTH + i] = 36
+        // "Set bottom line to 37 (color white: 0xFF,0xFF,0xFF)"
+        for i in 0..<fireWidth {
+            firePixels[(fireHeight - 1)*fireWidth + i] = 36
         }
     }
     
-    // MARK: - 🔥🚒🔥🚒
+    // MARK: - 🔥🔥🔥
     
     func doFire() {
-        for x in 0..<FIRE_WIDTH {
-            for y in 0..<FIRE_HEIGHT {
-                spreadFire(src: y * FIRE_WIDTH + x)
+        for x in 0..<fireWidth {
+            for y in 0..<fireHeight {
+                spreadFire(src: y * fireWidth + x)
             }
         }
     }
@@ -114,34 +115,31 @@ class ViewController: UIViewController {
         }
         
         if pixel == 0 {
-            firePixels[src - FIRE_WIDTH] = 0
+            firePixels[src - fireWidth] = 0
             return
         }
         
-        guard let srcPixel = firePixels[src] else {
-            assertionFailure("Missing src pixel: \(src)")
-            return
-        }
-        
-        firePixels[src - FIRE_WIDTH] = srcPixel - 1
+        let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
+        let dst = src - rand + 1
+        firePixels[dst - fireWidth] = pixel - (rand & 1)
     }
     
-    // MARK: - Draw View
+    // MARK: - Draw
     
-    func drawView() {
-        for x in 0..<FIRE_WIDTH {
-            for y in 0..<FIRE_HEIGHT {
-                guard let colorIndex = firePixels[y * FIRE_WIDTH + x] else {
+    func drawScreen() {
+        for x in 0..<fireWidth {
+            for y in 0..<fireHeight {
+                guard let colorIndex = firePixels[y * fireWidth + x] else {
                     break
                 }
-                var pixel = palette[colorIndex]
+                var pixel = colorPalette[colorIndex]
                 
                 let r = Double(pixel!["r"]!)
                 let g = Double(pixel!["g"]!)
                 let b = Double(pixel!["b"]!)
                 let color = UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1.0)
                 
-                ////
+                ///https://stackoverflow.com/questions/2395650/fastest-way-to-draw-a-screen-buffer-on-the-iphone
                 /*"The fastest App Store approved way to do CPU-only 2D graphics is to create a CGImage backed by a buffer using CGDataProviderCreateDirect and assign that to a CALayer's contents property.
                  
                  For best results use the kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little or kCGImageAlphaNone | kCGBitmapByteOrder32Little bitmap types and double buffer so that the display is never in an inconsistent state.
@@ -150,23 +148,18 @@ class ViewController: UIViewController {
                  
                  edit2: CADisplayLink is a useful class no matter which compositing method you use."
                  */
-
-                /// too slow
-//                let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: 1, height: 1))
-//                let layer = CAShapeLayer()
-//                layer.path = dotPath.cgPath
-//                layer.strokeColor = color.cgColor
-//                fireView.layer.addSublayer(layer)
                 
-                /// : - )
-                print(y * FIRE_WIDTH + x)
-                if let pixelView = pixelViews[y * FIRE_WIDTH + x] {
+                /// too slow for full screen,, too slow to in general need to do above method
+                if let pixelView = pixelViews[y * fireWidth + x] {
                     pixelView.backgroundColor = color
                 } else {
-                    let pixelView = UIView(frame: CGRect(x: x, y: y, width: 1, height: 1))
+                    let pixelView = UIView(frame: CGRect(x: x * multiplier,
+                                                         y: y * multiplier,
+                                                         width: multiplier,
+                                                         height: multiplier))
                     pixelView.backgroundColor = color
                     fireView.addSubview(pixelView)
-                    pixelViews[y * FIRE_WIDTH + x] = pixelView
+                    pixelViews[y * fireWidth + x] = pixelView
                 }
             }
         }
