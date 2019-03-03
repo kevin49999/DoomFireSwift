@@ -14,13 +14,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let FIRE_WIDTH = Int(UIScreen.main.bounds.width)
-    let FIRE_HEIGHT = Int(UIScreen.main.bounds.height)
+    let FIRE_WIDTH = 40
+    let FIRE_HEIGHT = 40 // magic..
     
     @IBOutlet weak private var fireView: UIView!
     
+    var pixelViews = [Int: UIView]()
     var palette = [Int: [String: Int]]()
-    
     var firePixels = [Int: Int]()
     
     var rgbs: [Int] = [
@@ -69,17 +69,13 @@ class ViewController: UIViewController {
         setup()
         drawView()
         
-//        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-//            self.doFire()
-//            self.drawView()
-//        })
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+            self.doFire()
+            self.drawView()
+        })
     }
     
     // MARK: - Setup
-    
-    func probablyDumb() {
-        //// create height * width # of "pixel" views, update their background color as you cycle through.. to make easier / faster, combine them into 4x4 and make sure fire pixels matches taht
-    }
     
     func populatePallete() {
         for i in 0..<rgbs.count / 3 {
@@ -113,7 +109,8 @@ class ViewController: UIViewController {
     
     func spreadFire(src: Int) {
         guard let pixel = firePixels[src] else {
-            fatalError()
+            assertionFailure("Missing pixel at: \(src)")
+            return
         }
         
         if pixel == 0 {
@@ -121,18 +118,23 @@ class ViewController: UIViewController {
             return
         }
         
-        firePixels[src - FIRE_WIDTH] = firePixels[src]! - 1
+        guard let srcPixel = firePixels[src] else {
+            assertionFailure("Missing src pixel: \(src)")
+            return
+        }
+        
+        firePixels[src - FIRE_WIDTH] = srcPixel - 1
     }
     
     // MARK: - Draw View
     
     func drawView() {
-        for x in 0..<Int(fireView.bounds.width) {
-            for y in 0..<Int(fireView.bounds.height) {
-                guard let index = firePixels[y * Int(fireView.bounds.width) + x] else {
+        for x in 0..<FIRE_WIDTH {
+            for y in 0..<FIRE_HEIGHT {
+                guard let colorIndex = firePixels[y * FIRE_WIDTH + x] else {
                     break
                 }
-                var pixel = palette[index]
+                var pixel = palette[colorIndex]
                 
                 let r = Double(pixel!["r"]!)
                 let g = Double(pixel!["g"]!)
@@ -140,13 +142,13 @@ class ViewController: UIViewController {
                 let color = UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1.0)
                 
                 ////
-                /*The fastest App Store approved way to do CPU-only 2D graphics is to create a CGImage backed by a buffer using CGDataProviderCreateDirect and assign that to a CALayer's contents property.
+                /*"The fastest App Store approved way to do CPU-only 2D graphics is to create a CGImage backed by a buffer using CGDataProviderCreateDirect and assign that to a CALayer's contents property.
                  
                  For best results use the kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little or kCGImageAlphaNone | kCGBitmapByteOrder32Little bitmap types and double buffer so that the display is never in an inconsistent state.
                  
                  edit: this should be faster than drawing to an OpenGL texture in theory, but as always, profile to be sure.
                  
-                 edit2: CADisplayLink is a useful class no matter which compositing method you use.
+                 edit2: CADisplayLink is a useful class no matter which compositing method you use."
                  */
 
                 /// too slow
@@ -156,10 +158,16 @@ class ViewController: UIViewController {
 //                layer.strokeColor = color.cgColor
 //                fireView.layer.addSublayer(layer)
                 
-                /// also slow
-                let view = UIView()
-                view.backgroundColor = color
-                
+                /// : - )
+                print(y * FIRE_WIDTH + x)
+                if let pixelView = pixelViews[y * FIRE_WIDTH + x] {
+                    pixelView.backgroundColor = color
+                } else {
+                    let pixelView = UIView(frame: CGRect(x: x, y: y, width: 1, height: 1))
+                    pixelView.backgroundColor = color
+                    fireView.addSubview(pixelView)
+                    pixelViews[y * FIRE_WIDTH + x] = pixelView
+                }
             }
         }
     }

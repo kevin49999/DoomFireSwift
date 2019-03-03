@@ -18,22 +18,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEA-Mi-EVa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yd2-Gc-L3x">
+                                <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="dmC-gg-mhW"/>
+                                    <constraint firstAttribute="height" constant="40" id="u8i-4l-iaP"/>
+                                </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="aEA-Mi-EVa" secondAttribute="bottom" id="8bL-ZU-6i4"/>
-                            <constraint firstItem="aEA-Mi-EVa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="E6J-aN-QKQ"/>
-                            <constraint firstAttribute="trailing" secondItem="aEA-Mi-EVa" secondAttribute="trailing" id="kZu-Kx-ywY"/>
-                            <constraint firstItem="aEA-Mi-EVa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="nIE-fO-2zo"/>
+                            <constraint firstItem="Yd2-Gc-L3x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C6u-52-tNJ"/>
+                            <constraint firstItem="Yd2-Gc-L3x" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Dft-dm-M5O"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="fireView" destination="aEA-Mi-EVa" id="tF6-tv-thw"/>
+                        <outlet property="fireView" destination="Yd2-Gc-L3x" id="nSc-6e-TZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
