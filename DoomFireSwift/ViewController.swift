@@ -25,77 +25,42 @@ class ViewController: UIViewController {
         RGBA32(red: 31, green: 7, blue: 7, alpha: 255),
         RGBA32(red: 37, green: 15, blue: 7, alpha: 255),
         RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
+        RGBA32(red: 113, green: 23, blue: 7, alpha: 255),
+        RGBA32(red: 103, green: 31, blue: 7, alpha: 255),
+        RGBA32(red: 119, green: 31, blue: 7, alpha: 255),
+        RGBA32(red: 143, green: 39, blue: 7, alpha: 255),
+        RGBA32(red: 159, green: 47, blue: 7, alpha: 255),
+        RGBA32(red: 175, green: 63, blue: 7, alpha: 255),
         RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0x57,0x17,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0x67,0x1F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0x77,0x1F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0x8F,0x27,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0x9F,0x2F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xAF,0x3F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0x47,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xC7,0x47,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xDF,0x4F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xDF,0x57,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xDF,0x57,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xD7,0x5F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xD7,0x5F,0x07,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xD7,0x67,0x0F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xCF,0x6F,0x0F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xCF,0x77,0x0F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xCF,0x7F,0x0F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xCF,0x87,0x17,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xC7,0x87,0x17,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xC7,0x8F,0x17,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xC7,0x97,0x1F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0x9F,0x1F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0x9F,0x1F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0xA7,0x27,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0xA7,0x27,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xBF,0xAF,0x2F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xB7,0xAF,0x2F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xB7,0xB7,0x2F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xB7,0xB7,0x37,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xCF,0xCF,0x6F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xDF,0xDF,0x9F,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-//        0xEF,0xEF,0xC7,
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255)
-//        0xFF,0xFF,0xFF
+        RGBA32(red: 191, green: 71, blue: 7, alpha: 255),
+        RGBA32(red: 199, green: 71, blue: 7, alpha: 255),
+        RGBA32(red: 223, green: 79, blue: 7, alpha: 255),
+        RGBA32(red: 223, green: 88, blue: 7, alpha: 255),
+        RGBA32(red: 223, green: 87, blue: 7, alpha: 255),
+        RGBA32(red: 215, green: 95, blue: 7, alpha: 255),
+        RGBA32(red: 215, green: 95, blue: 7, alpha: 255),
+        RGBA32(red: 215, green: 103, blue: 7, alpha: 255),
+        RGBA32(red: 207, green: 111, blue: 15, alpha: 255),
+        RGBA32(red: 207, green: 119, blue: 15, alpha: 255),
+        RGBA32(red: 207, green: 127, blue: 15, alpha: 255),
+        RGBA32(red: 207, green: 135, blue: 23, alpha: 255),
+        RGBA32(red: 199, green: 135, blue: 23, alpha: 255),
+        RGBA32(red: 199, green: 143, blue: 23, alpha: 255),
+        RGBA32(red: 199, green: 151, blue: 31, alpha: 255),
+        RGBA32(red: 191, green: 159, blue: 31, alpha: 255), /// log old and compare.. got off somewhere
+        RGBA32(red: 191, green: 167, blue: 39, alpha: 255),
+        RGBA32(red: 191, green: 167, blue: 39, alpha: 255),
+        RGBA32(red: 191, green: 175, blue: 45, alpha: 255),
+        RGBA32(red: 183, green: 175, blue: 45, alpha: 255),
+        RGBA32(red: 183, green: 183, blue: 47, alpha: 255),
+        RGBA32(red: 183, green: 183, blue: 55, alpha: 255),
+        RGBA32(red: 207, green: 207, blue: 111, alpha: 255),
+        RGBA32(red: 223, green: 223, blue: 159, alpha: 255),
+        RGBA32(red: 239, green: 239, blue: 199, alpha: 255),
+        RGBA32(red: 255, green: 255, blue: 255, alpha: 255)
     ]
     
     @IBOutlet weak var fireImageView: UIImageView!
-    @IBOutlet weak var fireView: UIView!
-    
     
     // MARK: - View Lifecycle
     
@@ -144,7 +109,6 @@ class ViewController: UIViewController {
             firePixels[src - fireWidth] = 0
             return
         }
-        
         let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
         let dst = src - rand + 1
         firePixels[dst - fireWidth] = pixel - (rand & 1)
@@ -153,9 +117,9 @@ class ViewController: UIViewController {
     // MARK: - Draw
     
     func drawScreen() {
-        //https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
+        // https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
         guard let image = fireImageView.image, let inputCGImage = image.cgImage else {
-            print("unable to get cgImage")
+            assertionFailure("unable to get cgImage")
             return
         }
         
@@ -168,13 +132,13 @@ class ViewController: UIViewController {
         let bitmapInfo       = RGBA32.bitmapInfo
         
         guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else {
-            print("unable to create context")
+            assertionFailure("Unable to create context")
             return
         }
         context.draw(inputCGImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         
         guard let buffer = context.data else {
-            print("unable to get context data")
+            assertionFailure("Unable to get context data")
             return
         }
         
@@ -183,7 +147,7 @@ class ViewController: UIViewController {
         for x in 0..<fireWidth {
             for y in 0..<fireHeight {
                 guard let colorIndex = firePixels[y * fireWidth + x] else {
-                    assertionFailure()
+                    assertionFailure("Offset out of bounds")
                     break
                 }
                 let color = rgbs[colorIndex]
