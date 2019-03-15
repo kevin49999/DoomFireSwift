@@ -65,7 +65,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupFirePixels()
         drawScreen()
-        
+
         let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { _ in
             self.doFire()
             self.drawScreen()
@@ -115,18 +115,20 @@ class ViewController: UIViewController {
     
     func drawScreen() {
         // https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
+        // still not fast enough if image is fullscreen
+        
         guard let image = fireImageView.image, let inputCGImage = image.cgImage else {
             assertionFailure("Unable to get cgImage")
             return
         }
         
-        let colorSpace       = CGColorSpaceCreateDeviceRGB()
-        let width            = inputCGImage.width
-        let height           = inputCGImage.height
-        let bytesPerPixel    = 4
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let width = inputCGImage.width
+        let height = inputCGImage.height
+        let bytesPerPixel = 4
         let bitsPerComponent = 8
-        let bytesPerRow      = bytesPerPixel * width
-        let bitmapInfo       = RGBA32.bitmapInfo
+        let bytesPerRow = bytesPerPixel * width
+        let bitmapInfo = RGBA32.bitmapInfo
         
         guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else {
             assertionFailure("Unable to create context")
