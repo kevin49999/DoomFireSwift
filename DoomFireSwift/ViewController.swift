@@ -8,16 +8,11 @@
 
 import UIKit
 
-// http://fabiensanglard.net/doom_fire_psx/index.html
-// http://fabiensanglard.net/doom_fire_psx/index.html
-// http://fabiensanglard.net/doom_fire_psx/index.html
+// http://fabiensanglard.net/doom_fire_psx/index.html 🔥
 
 class ViewController: UIViewController {
     
     // MARK: - Properties
-    
-    lazy var fireWidth = fireImageView.image!.cgImage!.width
-    lazy var fireHeight = fireImageView.image!.cgImage!.height
     
     var firePixels = [Int: Int]()
     var rgbs: [RGBA32] = [
@@ -60,6 +55,8 @@ class ViewController: UIViewController {
         RGBA32(red: 255, green: 255, blue: 255, alpha: 255)
     ]
     
+    lazy var fireWidth = fireImageView.image!.cgImage!.width
+    lazy var fireHeight = fireImageView.image!.cgImage!.height
     @IBOutlet weak var fireImageView: UIImageView!
     
     // MARK: - View Lifecycle
@@ -119,7 +116,7 @@ class ViewController: UIViewController {
     func drawScreen() {
         // https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
         guard let image = fireImageView.image, let inputCGImage = image.cgImage else {
-            assertionFailure("unable to get cgImage")
+            assertionFailure("Unable to get cgImage")
             return
         }
         
@@ -135,6 +132,7 @@ class ViewController: UIViewController {
             assertionFailure("Unable to create context")
             return
         }
+        
         context.draw(inputCGImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         
         guard let buffer = context.data else {

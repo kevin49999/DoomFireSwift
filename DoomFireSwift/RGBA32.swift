@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-//https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
+// https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
 
 struct RGBA32 {
     

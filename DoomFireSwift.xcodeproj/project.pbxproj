@@ -80,12 +80,12 @@
 			isa = PBXGroup;
 			children = (
 				0A611799222B77BC0058E847 /* AppDelegate.swift */,
-				0A61179B222B77BC0058E847 /* ViewController.swift */,
-				0ABF9B2E223B4A45004A1E37 /* RGBA32.swift */,
-				0A61179D222B77BC0058E847 /* Main.storyboard */,
 				0A6117A0222B77BF0058E847 /* Assets.xcassets */,
-				0A6117A2222B77BF0058E847 /* LaunchScreen.storyboard */,
 				0A6117A5222B77BF0058E847 /* Info.plist */,
+				0A6117A2222B77BF0058E847 /* LaunchScreen.storyboard */,
+				0A61179D222B77BC0058E847 /* Main.storyboard */,
+				0ABF9B2E223B4A45004A1E37 /* RGBA32.swift */,
+				0A61179B222B77BC0058E847 /* ViewController.swift */,
 			);
 			path = DoomFireSwift;
 			sourceTree = "<group>";
