@@ -13,6 +13,7 @@
 		0A6117A1222B77BF0058E847 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A6117A0222B77BF0058E847 /* Assets.xcassets */; };
 		0A6117A4222B77BF0058E847 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A6117A2222B77BF0058E847 /* LaunchScreen.storyboard */; };
 		0A6117AF222B77BF0058E847 /* DoomFireSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6117AE222B77BF0058E847 /* DoomFireSwiftTests.swift */; };
+		0ABF9B2F223B4A45004A1E37 /* RGBA32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABF9B2E223B4A45004A1E37 /* RGBA32.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		0A6117AA222B77BF0058E847 /* DoomFireSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoomFireSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A6117AE222B77BF0058E847 /* DoomFireSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoomFireSwiftTests.swift; sourceTree = "<group>"; };
 		0A6117B0222B77BF0058E847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0ABF9B2E223B4A45004A1E37 /* RGBA32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBA32.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				0A611799222B77BC0058E847 /* AppDelegate.swift */,
 				0A61179B222B77BC0058E847 /* ViewController.swift */,
+				0ABF9B2E223B4A45004A1E37 /* RGBA32.swift */,
 				0A61179D222B77BC0058E847 /* Main.storyboard */,
 				0A6117A0222B77BF0058E847 /* Assets.xcassets */,
 				0A6117A2222B77BF0058E847 /* LaunchScreen.storyboard */,
@@ -199,6 +202,7 @@
 			files = (
 				0A61179C222B77BC0058E847 /* ViewController.swift in Sources */,
 				0A61179A222B77BC0058E847 /* AppDelegate.swift in Sources */,
+				0ABF9B2F223B4A45004A1E37 /* RGBA32.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,24 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yd2-Gc-L3x">
-                                <rect key="frame" x="27.5" y="173.5" width="320" height="320"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="dmC-gg-mhW"/>
-                                    <constraint firstAttribute="height" constant="320" id="u8i-4l-iaP"/>
-                                </constraints>
-                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black" translatesAutoresizingMaskIntoConstraints="NO" id="uiq-VB-nYC">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Yd2-Gc-L3x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C6u-52-tNJ"/>
-                            <constraint firstItem="Yd2-Gc-L3x" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Dft-dm-M5O"/>
+                            <constraint firstItem="uiq-VB-nYC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DT0-ep-aM7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uiq-VB-nYC" secondAttribute="trailing" id="XFn-fp-UyQ"/>
+                            <constraint firstAttribute="bottom" secondItem="uiq-VB-nYC" secondAttribute="bottom" id="XHH-Ds-Q5i"/>
+                            <constraint firstItem="uiq-VB-nYC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="hf8-iJ-aFK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="fireView" destination="Yd2-Gc-L3x" id="nSc-6e-TZw"/>
+                        <outlet property="fireImageView" destination="uiq-VB-nYC" id="fSm-bJ-rbj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -43,4 +40,7 @@
             <point key="canvasLocation" x="53.600000000000001" y="32.833583208395808"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="black" width="50" height="50"/>
+    </resources>
 </document>
