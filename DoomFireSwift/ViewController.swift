@@ -7,20 +7,12 @@
 //
 
 import UIKit
-import CoreGraphics
 
 // http://fabiensanglard.net/doom_fire_psx/index.html 🔥
 
 class ViewController: UIViewController {
     
     // MARK: - Properties
-    
-    lazy var fireWidth: Int = {
-        return Int(fireImageView.bounds.width) / 4
-    }()
-    lazy var fireHeight: Int = {
-        return Int(fireImageView.bounds.height) / 4
-    }()
     
     var firePixels = [Int: Int]()
     var frameBuffer = [Int: [UInt8]]()
@@ -64,6 +56,12 @@ class ViewController: UIViewController {
         0, 255, 255, 255
     ]
     
+    lazy var fireWidth: Int = {
+        return Int(fireImageView.bounds.width) / 4
+    }()
+    lazy var fireHeight: Int = {
+        return Int(fireImageView.bounds.height) / 4
+    }()
     @IBOutlet weak var fireImageView: UIImageView!
     
     // MARK: - View Lifecycle
@@ -101,7 +99,6 @@ class ViewController: UIViewController {
     
     func renderFrame() {
         writeToFrameBuffer()
-        
         var data = [UInt8]()
         for i in 0..<fireHeight * fireWidth {
             data.append(contentsOf: frameBuffer[i] ?? [])
@@ -119,10 +116,10 @@ class ViewController: UIViewController {
                 
                 let adjustedIndex = colorIndex * 4
                 let colorStart = rgbs[adjustedIndex]
-                let a = rgbs[adjustedIndex + 1]
-                let b = rgbs[adjustedIndex + 2]
-                let c = rgbs[adjustedIndex + 3]
-                frameBuffer[y * fireWidth + x] = [colorStart, a, b, c]
+                let r = rgbs[adjustedIndex + 1]
+                let g = rgbs[adjustedIndex + 2]
+                let b = rgbs[adjustedIndex + 3]
+                frameBuffer[y * fireWidth + x] = [colorStart, r, g, b]
             }
         }
     }
@@ -152,7 +149,7 @@ class ViewController: UIViewController {
         firePixels[dst - fireWidth] = pixel - (rand & 1)
     }
     
-    // MARK: - Make Image: http://gabrieloc.com/2017/03/21/GIOVANNI.html
+    // MARK: - Make Image - http://gabrieloc.com/2017/03/21/GIOVANNI.html
     
     func makeImage(width: Int, height: Int, data: [UInt8]) -> UIImage? {
         UIGraphicsBeginImageContext(CGSize(width: width, height: height))
