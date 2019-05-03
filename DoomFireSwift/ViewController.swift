@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreGraphics
 
 // http://fabiensanglard.net/doom_fire_psx/index.html 🔥
 
@@ -15,64 +16,75 @@ class ViewController: UIViewController {
     // MARK: - Properties
     
     var firePixels = [Int: Int]()
-    var rgbs: [RGBA32] = [
-        RGBA32(red: 7, green: 7, blue: 7, alpha: 255),
-        RGBA32(red: 31, green: 7, blue: 7, alpha: 255),
-        RGBA32(red: 47, green: 15, blue: 7, alpha: 255),
-        RGBA32(red: 71, green: 15, blue: 7, alpha: 255),
-        RGBA32(red: 87, green: 23, blue: 7, alpha: 255),
-        RGBA32(red: 103, green: 31, blue: 7, alpha: 255),
-        RGBA32(red: 119, green: 31, blue: 7, alpha: 255),
-        RGBA32(red: 143, green: 39, blue: 7, alpha: 255),
-        RGBA32(red: 159, green: 47, blue: 7, alpha: 255),
-        RGBA32(red: 175, green: 63, blue: 7, alpha: 255),
-        RGBA32(red: 191, green: 71, blue: 7, alpha: 255),
-        RGBA32(red: 199, green: 71, blue: 7, alpha: 255),
-        RGBA32(red: 223, green: 79, blue: 7, alpha: 255),
-        RGBA32(red: 223, green: 87, blue: 7, alpha: 255),
-        RGBA32(red: 223, green: 87, blue: 7, alpha: 255),
-        RGBA32(red: 215, green: 95, blue: 7, alpha: 255),
-        RGBA32(red: 215, green: 95, blue: 7, alpha: 255),
-        RGBA32(red: 215, green: 103, blue: 15, alpha: 255),
-        RGBA32(red: 207, green: 111, blue: 15, alpha: 255),
-        RGBA32(red: 207, green: 119, blue: 15, alpha: 255),
-        RGBA32(red: 207, green: 127, blue: 15, alpha: 255),
-        RGBA32(red: 207, green: 135, blue: 23, alpha: 255),
-        RGBA32(red: 199, green: 135, blue: 23, alpha: 255),
-        RGBA32(red: 199, green: 143, blue: 23, alpha: 255),
-        RGBA32(red: 199, green: 151, blue: 31, alpha: 255),
-        RGBA32(red: 191, green: 159, blue: 31, alpha: 255),
-        RGBA32(red: 191, green: 159, blue: 31, alpha: 255),
-        RGBA32(red: 191, green: 167, blue: 39, alpha: 255),
-        RGBA32(red: 191, green: 167, blue: 39, alpha: 255),
-        RGBA32(red: 191, green: 175, blue: 47, alpha: 255),
-        RGBA32(red: 183, green: 175, blue: 47, alpha: 255),
-        RGBA32(red: 183, green: 183, blue: 47, alpha: 255),
-        RGBA32(red: 183, green: 183, blue: 55, alpha: 255),
-        RGBA32(red: 207, green: 207, blue: 111, alpha: 255),
-        RGBA32(red: 223, green: 223, blue: 159, alpha: 255),
-        RGBA32(red: 239, green: 239, blue: 199, alpha: 255),
-        RGBA32(red: 255, green: 255, blue: 255, alpha: 255)
+    var frameBuffer = [Int: [UInt8]]()
+    var rgbs: [UInt8] = [
+        0, 7, 7, 7,
+        0, 31, 7, 7,
+        0, 47, 15,  7,
+        0, 71, 15,  7,
+        0, 87, 23,  7,
+        0, 103, 31, 7,
+        0, 119, 31, 7,
+        0, 143, 39, 7,
+        0, 159, 47, 7,
+        0, 175, 63, 7,
+        0, 191, 71, 7,
+        0, 199, 71, 7,
+        0, 223, 79, 7,
+        0, 223, 87, 7,
+        0, 223, 87, 7,
+        0, 215, 95, 7,
+        0, 215, 95, 7,
+        0, 215, 103, 15,
+        0, 207, 111, 15,
+        0, 207, 119, 15,
+        0, 207, 127, 15,
+        0 ,207, 135, 23,
+        0, 199, 135, 23,
+        0, 199, 143, 23,
+        0, 199, 151, 31,
+        0, 191, 159, 31,
+        0, 191, 159, 31,
+        0, 191, 167, 39,
+        0, 191, 167, 39,
+        0, 191, 175, 47,
+        0, 183, 175, 47,
+        0, 183, 183, 47,
+        0, 183, 183, 55,
+        0, 207, 207, 111,
+        0, 223, 223, 159,
+        0, 239, 239, 199,
+        0, 255, 255, 255
     ]
     
-    lazy var fireWidth = fireImageView.image!.cgImage!.width
-    lazy var fireHeight = fireImageView.image!.cgImage!.height
+    let fireWidth = 40
+    let fireHeight = 80
+    
     @IBOutlet weak var fireImageView: UIImageView!
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
+        
         setupFirePixels()
-        drawScreen()
-
-        let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { _ in
-            self.doFire()
-            self.drawScreen()
+        bindToFrameBuffer()
+        let data = frameBuffer.values.reduce([UInt8](), +)
+        fireImageView.image = makeImage(width: 40, height: 80, data: data)
+        
+        func runForever() {
+            doFire()
+            bindToFrameBuffer()
+            let data = frameBuffer.values.reduce([UInt8](), +)
+            fireImageView.image = makeImage(width: 40, height: 80, data: data)
+        }
+        
+        // 60 FPS
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.01666667, repeats: true, block: { _ in
+            runForever()
         })
     }
-    
-    // MARK: - Setup
     
     func setupFirePixels() {
         /// "Set whole screen to 0 (color: 0x070707)"
@@ -86,7 +98,7 @@ class ViewController: UIViewController {
         }
     }
     
-    // MARK: - 🔥🔥🔥
+    // MARK: - Fire 🔥🚒🚒🚒
     
     func doFire() {
         for x in 0..<fireWidth {
@@ -101,7 +113,7 @@ class ViewController: UIViewController {
             assertionFailure("Missing pixel at: \(src)")
             return
         }
-        
+
         if pixel == 0 {
             firePixels[src - fireWidth] = 0
             return
@@ -111,52 +123,42 @@ class ViewController: UIViewController {
         firePixels[dst - fireWidth] = pixel - (rand & 1)
     }
     
-    // MARK: - Draw
+    // MARK: - Frame Buffer
     
-    func drawScreen() {
-        // https://stackoverflow.com/questions/31661023/change-color-of-certain-pixels-in-a-uiimage
-        // still not fast enough if image is fullscreen
-        
-        guard let image = fireImageView.image, let inputCGImage = image.cgImage else {
-            assertionFailure("Unable to get cgImage")
-            return
-        }
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let width = inputCGImage.width
-        let height = inputCGImage.height
-        let bytesPerPixel = 4
-        let bitsPerComponent = 8
-        let bytesPerRow = bytesPerPixel * width
-        let bitmapInfo = RGBA32.bitmapInfo
-        
-        guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else {
-            assertionFailure("Unable to create context")
-            return
-        }
-        
-        context.draw(inputCGImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
-        guard let buffer = context.data else {
-            assertionFailure("Unable to get context data")
-            return
-        }
-        
-        let pixelBuffer = buffer.bindMemory(to: RGBA32.self, capacity: width * height)
-        
+    func bindToFrameBuffer() {
         for x in 0..<fireWidth {
             for y in 0..<fireHeight {
                 guard let colorIndex = firePixels[y * fireWidth + x] else {
                     assertionFailure("Offset out of bounds")
                     break
                 }
-                let color = rgbs[colorIndex]
-                pixelBuffer[y * fireWidth + x] = color
+                
+                let adjustedIndex = colorIndex * 4
+                let colorStart = rgbs[adjustedIndex]
+                let a = rgbs[adjustedIndex + 1]
+                let b = rgbs[adjustedIndex + 2]
+                let c = rgbs[adjustedIndex + 3]
+                frameBuffer[y * fireWidth + x] = [colorStart, a, b, c]
             }
         }
-        
-        let outputCGImage = context.makeImage()!
-        let outputImage = UIImage(cgImage: outputCGImage, scale: image.scale, orientation: image.imageOrientation)
-        fireImageView.image = outputImage
+    }
+    
+    // MARK: - Make Image - http://gabrieloc.com/2017/03/21/GIOVANNI.html
+    
+    func makeImage(width: Int, height: Int, data: [UInt8]) -> UIImage? {
+        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+        guard let bitmapContext = CGContext(
+            data: UnsafeMutablePointer(mutating: data),
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
+            ),
+            let cgImage = bitmapContext.makeImage()
+            else {
+                return nil
+        }
+        return UIImage(cgImage: cgImage)
     }
 }
