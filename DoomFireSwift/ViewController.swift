@@ -15,17 +15,21 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    let fireWidth = 40
-    let fireHeight = 80
+    lazy var fireWidth: Int = {
+        return Int(fireImageView.bounds.width) / 4
+    }()
+    lazy var fireHeight: Int = {
+        return Int(fireImageView.bounds.height) / 4
+    }()
     
     var firePixels = [Int: Int]()
     var frameBuffer = [Int: [UInt8]]()
     var rgbs: [UInt8] = [
         0, 7, 7, 7,
         0, 31, 7, 7,
-        0, 47, 15,  7,
-        0, 71, 15,  7,
-        0, 87, 23,  7,
+        0, 47, 15, 7,
+        0, 71, 15, 7,
+        0, 87, 23, 7,
         0, 103, 31, 7,
         0, 119, 31, 7,
         0, 143, 39, 7,
@@ -60,16 +64,13 @@ class ViewController: UIViewController {
         0, 255, 255, 255
     ]
     
-    @IBOutlet weak var fireImageView: UIImageView! {
-        didSet {
-            fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
-        }
-    }
+    @IBOutlet weak var fireImageView: UIImageView!
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
         
         setupFirePixels()
         renderFrame()
@@ -91,6 +92,7 @@ class ViewController: UIViewController {
         
         // "Set bottom line to 37 (color white: 0xFFFFFF)"
         for i in 0..<fireWidth {
+            print((fireHeight - 1) * fireWidth + i)
             firePixels[(fireHeight - 1) * fireWidth + i] = 36
         }
     }
@@ -99,8 +101,12 @@ class ViewController: UIViewController {
     
     func renderFrame() {
         writeToFrameBuffer()
-        let data = frameBuffer.values.reduce([UInt8](), +)
-        fireImageView.image = makeImage(width: 40, height: 80, data: data)
+        
+        var data = [UInt8]()
+        for i in 0..<fireHeight * fireWidth {
+            data.append(contentsOf: frameBuffer[i] ?? [])
+        }
+        fireImageView.image = makeImage(width: fireWidth, height: fireHeight, data: data)
     }
     
     func writeToFrameBuffer() {
