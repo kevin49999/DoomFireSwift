@@ -90,7 +90,6 @@ class ViewController: UIViewController {
         
         // "Set bottom line to 37 (color white: 0xFFFFFF)"
         for i in 0..<fireWidth {
-            print((fireHeight - 1) * fireWidth + i)
             firePixels[(fireHeight - 1) * fireWidth + i] = 36
         }
     }
