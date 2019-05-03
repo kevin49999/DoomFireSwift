@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
+    let fireWidth = 40
+    let fireHeight = 80
+    
     var firePixels = [Int: Int]()
     var frameBuffer = [Int: [UInt8]]()
     var rgbs: [UInt8] = [
@@ -57,34 +60,28 @@ class ViewController: UIViewController {
         0, 255, 255, 255
     ]
     
-    let fireWidth = 40
-    let fireHeight = 80
-    
-    @IBOutlet weak var fireImageView: UIImageView!
+    @IBOutlet weak var fireImageView: UIImageView! {
+        didSet {
+            fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
+        }
+    }
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
         
         setupFirePixels()
-        bindToFrameBuffer()
-        let data = frameBuffer.values.reduce([UInt8](), +)
-        fireImageView.image = makeImage(width: 40, height: 80, data: data)
+        renderFrame()
         
-        func runForever() {
-            doFire()
-            bindToFrameBuffer()
-            let data = frameBuffer.values.reduce([UInt8](), +)
-            fireImageView.image = makeImage(width: 40, height: 80, data: data)
-        }
-        
-        // 60 FPS
+        // 60 fps
         let _ = Timer.scheduledTimer(withTimeInterval: 0.01666667, repeats: true, block: { _ in
-            runForever()
+            self.doFire()
+            self.renderFrame()
         })
     }
+    
+    // MARK: - Setup
     
     func setupFirePixels() {
         /// "Set whole screen to 0 (color: 0x070707)"
@@ -98,34 +95,15 @@ class ViewController: UIViewController {
         }
     }
     
-    // MARK: - Fire 🔥🚒🚒🚒
+    // MARK: - Frame Handling
     
-    func doFire() {
-        for x in 0..<fireWidth {
-            for y in 0..<fireHeight {
-                spreadFire(src: y * fireWidth + x)
-            }
-        }
+    func renderFrame() {
+        writeToFrameBuffer()
+        let data = frameBuffer.values.reduce([UInt8](), +)
+        fireImageView.image = makeImage(width: 40, height: 80, data: data)
     }
     
-    func spreadFire(src: Int) {
-        guard let pixel = firePixels[src] else {
-            assertionFailure("Missing pixel at: \(src)")
-            return
-        }
-
-        if pixel == 0 {
-            firePixels[src - fireWidth] = 0
-            return
-        }
-        let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
-        let dst = src - rand + 1
-        firePixels[dst - fireWidth] = pixel - (rand & 1)
-    }
-    
-    // MARK: - Frame Buffer
-    
-    func bindToFrameBuffer() {
+    func writeToFrameBuffer() {
         for x in 0..<fireWidth {
             for y in 0..<fireHeight {
                 guard let colorIndex = firePixels[y * fireWidth + x] else {
@@ -143,7 +121,32 @@ class ViewController: UIViewController {
         }
     }
     
-    // MARK: - Make Image - http://gabrieloc.com/2017/03/21/GIOVANNI.html
+    // MARK: - Fire Spreading 🔥🚒🚒🚒
+    
+    func doFire() {
+        for x in 0..<fireWidth {
+            for y in 0..<fireHeight {
+                spreadFire(src: y * fireWidth + x)
+            }
+        }
+    }
+    
+    func spreadFire(src: Int) {
+        guard let pixel = firePixels[src] else {
+            assertionFailure("Missing pixel at: \(src)")
+            return
+        }
+        
+        if pixel == 0 {
+            firePixels[src - fireWidth] = 0
+            return
+        }
+        let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
+        let dst = src - rand + 1
+        firePixels[dst - fireWidth] = pixel - (rand & 1)
+    }
+    
+    // MARK: - Make Image: http://gabrieloc.com/2017/03/21/GIOVANNI.html
     
     func makeImage(width: Int, height: Int, data: [UInt8]) -> UIImage? {
         UIGraphicsBeginImageContext(CGSize(width: width, height: height))
@@ -159,6 +162,7 @@ class ViewController: UIViewController {
             else {
                 return nil
         }
+        
         return UIImage(cgImage: cgImage)
     }
 }
