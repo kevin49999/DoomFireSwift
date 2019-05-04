@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
     var firePixels = [Int: Int]()
-    var frameBuffer = [Int: [UInt8]]()
+    var frameBuffer = [UInt8]()
     var rgbs: [UInt8] = [
         0, 7, 7, 7,
         0, 31, 7, 7,
@@ -62,20 +63,21 @@ class ViewController: UIViewController {
     lazy var fireHeight: Int = {
         return Int(fireImageView.bounds.height) / 4
     }()
-    @IBOutlet weak var fireImageView: UIImageView!
+    @IBOutlet weak var fireImageView: FrameImageView!
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
+        fireImageView.delegate = self
         
         setupFirePixels()
+        writeToFrameBuffer()
         renderFrame()
         
         // 60 fps
         let _ = Timer.scheduledTimer(withTimeInterval: 0.01666667, repeats: true, block: { _ in
-            self.doFire()
             self.renderFrame()
         })
     }
@@ -96,31 +98,25 @@ class ViewController: UIViewController {
     
     // MARK: - Frame Handling
     
-    func renderFrame() {
-        writeToFrameBuffer()
-        var data = [UInt8]()
-        for i in 0..<fireHeight * fireWidth {
-            data.append(contentsOf: frameBuffer[i] ?? [])
+    func writeToFrameBuffer() {
+        frameBuffer.removeAll()
+        for i in 0..<fireWidth * fireHeight {
+            guard let colorIndex = firePixels[i] else {
+                assertionFailure("Offset out of bounds")
+                break
+            }
+            
+            let adjustedIndex = colorIndex * 4
+            let colorStart = rgbs[adjustedIndex]
+            let r = rgbs[adjustedIndex + 1]
+            let g = rgbs[adjustedIndex + 2]
+            let b = rgbs[adjustedIndex + 3]
+            frameBuffer.append(contentsOf: [colorStart, r, g, b])
         }
-        fireImageView.image = makeImage(width: fireWidth, height: fireHeight, data: data)
     }
     
-    func writeToFrameBuffer() {
-        for x in 0..<fireWidth {
-            for y in 0..<fireHeight {
-                guard let colorIndex = firePixels[y * fireWidth + x] else {
-                    assertionFailure("Offset out of bounds")
-                    break
-                }
-                
-                let adjustedIndex = colorIndex * 4
-                let colorStart = rgbs[adjustedIndex]
-                let r = rgbs[adjustedIndex + 1]
-                let g = rgbs[adjustedIndex + 2]
-                let b = rgbs[adjustedIndex + 3]
-                frameBuffer[y * fireWidth + x] = [colorStart, r, g, b]
-            }
-        }
+    func renderFrame() {
+        fireImageView.image = makeImage(width: fireWidth, height: fireHeight, data: frameBuffer)
     }
     
     // MARK: - Fire Spreading 🔥🚒🚒🚒
@@ -158,7 +154,7 @@ class ViewController: UIViewController {
             height: height,
             bitsPerComponent: 8,
             bytesPerRow: width * 4,
-            space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
+            space: colorSpace, bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
             ),
             let cgImage = bitmapContext.makeImage()
             else {
@@ -166,5 +162,29 @@ class ViewController: UIViewController {
         }
         
         return UIImage(cgImage: cgImage)
+    }
+}
+
+// MARK: - FrameImageViewDelegate
+
+extension ViewController: FrameImageViewDelegate {
+    func frameDidSet() {
+        doFire()
+        writeToFrameBuffer()
+    }
+}
+
+protocol FrameImageViewDelegate: class {
+    func frameDidSet()
+}
+
+class FrameImageView: UIImageView {
+    
+    weak var delegate: FrameImageViewDelegate?
+    
+    override var image: UIImage? {
+        didSet {
+            delegate?.frameDidSet()
+        }
     }
 }
