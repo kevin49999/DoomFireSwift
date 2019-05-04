@@ -173,18 +173,3 @@ extension ViewController: FrameImageViewDelegate {
         writeToFrameBuffer()
     }
 }
-
-protocol FrameImageViewDelegate: class {
-    func frameDidSet()
-}
-
-class FrameImageView: UIImageView {
-    
-    weak var delegate: FrameImageViewDelegate?
-    
-    override var image: UIImage? {
-        didSet {
-            delegate?.frameDidSet()
-        }
-    }
-}
