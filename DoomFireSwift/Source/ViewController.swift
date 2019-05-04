@@ -56,7 +56,6 @@ class ViewController: UIViewController {
         0, 239, 239, 199,
         0, 255, 255, 255
     ]
-    
     lazy var fireWidth: Int = {
         return Int(fireImageView.bounds.width) / 4
     }()
@@ -102,8 +101,8 @@ class ViewController: UIViewController {
         frameBuffer.removeAll()
         for i in 0..<fireWidth * fireHeight {
             guard let colorIndex = firePixels[i] else {
-                assertionFailure("Offset out of bounds")
-                break
+                assertionFailure("Index out of bounds")
+                continue
             }
             
             let adjustedIndex = colorIndex * 4
