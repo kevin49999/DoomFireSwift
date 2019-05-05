@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A51C2C2227E5BF200CE000E /* FrameImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A51C2C1227E5BF200CE000E /* FrameImageView.swift */; };
+		0A51C2C6227E8BE100CE000E /* UIImage+Framebuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A51C2C5227E8BE100CE000E /* UIImage+Framebuffer.swift */; };
 		0A61179A222B77BC0058E847 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A611799222B77BC0058E847 /* AppDelegate.swift */; };
 		0A61179C222B77BC0058E847 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61179B222B77BC0058E847 /* ViewController.swift */; };
 		0A61179F222B77BC0058E847 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A61179D222B77BC0058E847 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		0A51C2C1227E5BF200CE000E /* FrameImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameImageView.swift; sourceTree = "<group>"; };
+		0A51C2C5227E8BE100CE000E /* UIImage+Framebuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Framebuffer.swift"; sourceTree = "<group>"; };
 		0A611796222B77BC0058E847 /* DoomFireSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoomFireSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A611799222B77BC0058E847 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A61179B222B77BC0058E847 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				0A51C2C1227E5BF200CE000E /* FrameImageView.swift */,
+				0A51C2C5227E8BE100CE000E /* UIImage+Framebuffer.swift */,
 				0A61179B222B77BC0058E847 /* ViewController.swift */,
 			);
 			path = Source;
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A51C2C2227E5BF200CE000E /* FrameImageView.swift in Sources */,
+				0A51C2C6227E8BE100CE000E /* UIImage+Framebuffer.swift in Sources */,
 				0A61179C222B77BC0058E847 /* ViewController.swift in Sources */,
 				0A61179A222B77BC0058E847 /* AppDelegate.swift in Sources */,
 			);

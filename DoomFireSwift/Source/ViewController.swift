@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    let colorSpace = CGColorSpaceCreateDeviceRGB()
     var firePixels = [Int: Int]()
     var frameBuffer = [UInt8]()
     var rgbs: [UInt8] = [
@@ -76,7 +75,7 @@ class ViewController: UIViewController {
         renderFrame()
         
         // 60 fps
-        let _ = Timer.scheduledTimer(withTimeInterval: 0.01666667, repeats: true, block: { _ in
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.0 / 60, repeats: true, block: { _ in
             self.renderFrame()
         })
     }
@@ -104,7 +103,6 @@ class ViewController: UIViewController {
                 assertionFailure("Index out of bounds")
                 continue
             }
-            
             let adjustedIndex = colorIndex * 4
             let a = rgbs[adjustedIndex]
             let r = rgbs[adjustedIndex + 1]
@@ -115,10 +113,10 @@ class ViewController: UIViewController {
     }
     
     func renderFrame() {
-        fireImageView.image = makeImage(width: fireWidth, height: fireHeight, data: frameBuffer)
+        fireImageView.image = UIImage(width: fireWidth, height: fireHeight, data: frameBuffer)
     }
     
-    // MARK: - Fire Spreading 🔥🚒🚒🚒
+    // MARK: - Fire Spreading 🔥🚒
     
     func doFire() {
         for x in 0..<fireWidth {
@@ -133,7 +131,6 @@ class ViewController: UIViewController {
             assertionFailure("Missing pixel at: \(src)")
             return
         }
-        
         if pixel == 0 {
             firePixels[src - fireWidth] = 0
             return
@@ -141,27 +138,6 @@ class ViewController: UIViewController {
         let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
         let dst = src - rand + 1
         firePixels[dst - fireWidth] = pixel - (rand & 1)
-    }
-    
-    // MARK: - Make Image - http://gabrieloc.com/2017/03/21/GIOVANNI.html
-    
-    func makeImage(width: Int, height: Int, data: [UInt8]) -> UIImage? {
-        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
-        guard let bitmapContext = CGContext(
-            data: UnsafeMutablePointer(mutating: data),
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bytesPerRow: width * 4,
-            space: colorSpace,
-            bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
-            ),
-            let cgImage = bitmapContext.makeImage()
-            else {
-                return nil
-        }
-        
-        return UIImage(cgImage: cgImage)
     }
 }
 
