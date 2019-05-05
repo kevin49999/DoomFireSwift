@@ -16,44 +16,44 @@ class ViewController: UIViewController {
     
     var firePixels = [Int: Int]()
     var frameBuffer = [UInt8]()
-    var rgbs: [UInt8] = [
-        0, 7, 7, 7,
-        0, 31, 7, 7,
-        0, 47, 15, 7,
-        0, 71, 15, 7,
-        0, 87, 23, 7,
-        0, 103, 31, 7,
-        0, 119, 31, 7,
-        0, 143, 39, 7,
-        0, 159, 47, 7,
-        0, 175, 63, 7,
-        0, 191, 71, 7,
-        0, 199, 71, 7,
-        0, 223, 79, 7,
-        0, 223, 87, 7,
-        0, 223, 87, 7,
-        0, 215, 95, 7,
-        0, 215, 95, 7,
-        0, 215, 103, 15,
-        0, 207, 111, 15,
-        0, 207, 119, 15,
-        0, 207, 127, 15,
-        0 ,207, 135, 23,
-        0, 199, 135, 23,
-        0, 199, 143, 23,
-        0, 199, 151, 31,
-        0, 191, 159, 31,
-        0, 191, 159, 31,
-        0, 191, 167, 39,
-        0, 191, 167, 39,
-        0, 191, 175, 47,
-        0, 183, 175, 47,
-        0, 183, 183, 47,
-        0, 183, 183, 55,
-        0, 207, 207, 111,
-        0, 223, 223, 159,
-        0, 239, 239, 199,
-        0, 255, 255, 255
+    var colorPallete: [Color] = [
+        Color(r: 7, g: 7, b: 7),
+        Color(r: 31, g: 7, b:7),
+        Color(r: 47, g:15, b: 7),
+        Color(r: 71, g: 15, b: 7),
+        Color(r: 87, g: 23, b: 7),
+        Color(r: 103, g: 31, b: 7),
+        Color(r: 119, g: 31, b: 7),
+        Color(r: 143, g: 39, b: 7),
+        Color(r: 159, g: 47, b: 7),
+        Color(r: 175, g: 63, b: 7),
+        Color(r: 191, g: 71, b: 7),
+        Color(r: 199, g: 71, b: 7),
+        Color(r: 223, g: 79, b: 7),
+        Color(r: 223, g: 87, b: 7),
+        Color(r: 223, g: 87, b: 7),
+        Color(r: 215, g: 95, b: 7),
+        Color(r: 215, g: 95, b: 7),
+        Color(r: 215, g: 103, b: 15),
+        Color(r: 207, g: 111, b: 15),
+        Color(r: 207, g: 119, b: 15),
+        Color(r: 207, g: 127, b: 15),
+        Color(r: 207, g: 135, b: 23),
+        Color(r: 199, g: 135, b: 23),
+        Color(r: 199, g: 143, b: 23),
+        Color(r: 199, g: 151, b: 31),
+        Color(r: 191, g: 159, b: 31),
+        Color(r: 191, g: 159, b: 31),
+        Color(r: 191, g: 167, b: 39),
+        Color(r: 191, g: 167, b: 39),
+        Color(r: 191, g: 175, b: 47),
+        Color(r: 183, g: 175, b: 47),
+        Color(r: 183, g: 183, b: 47),
+        Color(r: 183, g: 183, b: 55),
+        Color(r: 207, g: 207, b: 111),
+        Color(r: 223, g: 223, b: 159),
+        Color(r: 239, g: 239, b: 199),
+        Color(r: 255, g: 255, b: 255)
     ]
     lazy var fireWidth: Int = {
         return Int(fireImageView.bounds.width) / 4
@@ -97,23 +97,20 @@ class ViewController: UIViewController {
     // MARK: - Frame Handling
     
     func writeToFrameBuffer() {
-        frameBuffer.removeAll()
+        frameBuffer = []
         for i in 0..<fireWidth * fireHeight {
             guard let colorIndex = firePixels[i] else {
                 assertionFailure("Index out of bounds")
                 continue
             }
-            let adjustedIndex = colorIndex * 4
-            let a = rgbs[adjustedIndex]
-            let r = rgbs[adjustedIndex + 1]
-            let g = rgbs[adjustedIndex + 2]
-            let b = rgbs[adjustedIndex + 3]
-            frameBuffer.append(contentsOf: [a, r, g, b])
+            let color = colorPallete[colorIndex]
+            frameBuffer.append(contentsOf: [color.a, color.r, color.g, color.b])
         }
     }
     
     func renderFrame() {
-        fireImageView.image = UIImage(width: fireWidth, height: fireHeight, data: frameBuffer)
+        let bitmap = Bitmap(width: fireWidth, height: fireHeight, colorData: frameBuffer)
+        fireImageView.image = UIImage(bitmap: bitmap)
     }
     
     // MARK: - Fire Spreading 🔥🚒

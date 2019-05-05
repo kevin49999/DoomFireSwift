@@ -8,16 +8,23 @@
 
 import UIKit
 
+// https://github.com/nicklockwood/Swiftenstein
+struct Bitmap {
+    let width: Int
+    let height: Int
+    let colorData: [UInt8]
+}
+
 // http://gabrieloc.com/2017/03/21/GIOVANNI.html
 extension UIImage {
-    convenience init?(width: Int, height: Int, data: [UInt8]) {
-        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+    convenience init?(bitmap: Bitmap) {
+        UIGraphicsBeginImageContext(CGSize(width: bitmap.width, height: bitmap.height))
         guard let bitmapContext = CGContext(
-            data: UnsafeMutablePointer(mutating: data),
-            width: width,
-            height: height,
+            data: UnsafeMutablePointer(mutating: bitmap.colorData),
+            width: bitmap.width,
+            height: bitmap.height,
             bitsPerComponent: 8,
-            bytesPerRow: width * 4,
+            bytesPerRow: bitmap.width * 4,
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
             ),
