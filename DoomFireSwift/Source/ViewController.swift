@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fireImageView.layer.magnificationFilter = CALayerContentsFilter(rawValue: kCISamplerFilterNearest)
+        fireImageView.layer.magnificationFilter = .nearest
         fireImageView.delegate = self
         
         setupFirePixels()
