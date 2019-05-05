@@ -106,11 +106,11 @@ class ViewController: UIViewController {
             }
             
             let adjustedIndex = colorIndex * 4
-            let colorStart = rgbs[adjustedIndex]
+            let a = rgbs[adjustedIndex]
             let r = rgbs[adjustedIndex + 1]
             let g = rgbs[adjustedIndex + 2]
             let b = rgbs[adjustedIndex + 3]
-            frameBuffer.append(contentsOf: [colorStart, r, g, b])
+            frameBuffer.append(contentsOf: [a, r, g, b])
         }
     }
     
@@ -153,7 +153,8 @@ class ViewController: UIViewController {
             height: height,
             bitsPerComponent: 8,
             bytesPerRow: width * 4,
-            space: colorSpace, bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
+            space: colorSpace,
+            bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
             ),
             let cgImage = bitmapContext.makeImage()
             else {
