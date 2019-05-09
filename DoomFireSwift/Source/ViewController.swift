@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     // MARK: - Properties
     
     var firePixels = [Int: Int]()
-    var frameBuffer = [UInt8]()
+    var frameBuffer = [Color]()
     var colorPallete: [Color] = [
         Color(r: 7, g: 7, b: 7),
         Color(r: 31, g: 7, b:7),
@@ -61,21 +61,22 @@ class ViewController: UIViewController {
     lazy var fireHeight: Int = {
         return Int(fireImageView.bounds.height) / 4
     }()
-    @IBOutlet weak var fireImageView: FrameImageView!
+    @IBOutlet weak var fireImageView: UIImageView!
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fireImageView.layer.magnificationFilter = .nearest
-        fireImageView.delegate = self
         
         setupFirePixels()
         writeToFrameBuffer()
         renderFrame()
         
         // 60 fps
-        let _ = Timer.scheduledTimer(withTimeInterval: 1.0 / 60, repeats: true, block: { _ in
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true, block: { _ in
+            self.doFire()
+            self.writeToFrameBuffer()
             self.renderFrame()
         })
     }
@@ -104,12 +105,12 @@ class ViewController: UIViewController {
                 continue
             }
             let color = colorPallete[colorIndex]
-            frameBuffer.append(contentsOf: [color.a, color.r, color.g, color.b])
+            frameBuffer.append(color)
         }
     }
     
     func renderFrame() {
-        let bitmap = Bitmap(width: fireWidth, height: fireHeight, colorData: frameBuffer)
+        let bitmap = Bitmap(width: fireWidth, height: fireHeight, pixels: frameBuffer)
         fireImageView.image = UIImage(bitmap: bitmap)
     }
     
@@ -135,14 +136,5 @@ class ViewController: UIViewController {
         let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
         let dst = src - rand + 1
         firePixels[dst - fireWidth] = pixel - (rand & 1)
-    }
-}
-
-// MARK: - FrameImageViewDelegate
-
-extension ViewController: FrameImageViewDelegate {
-    func frameDidSet() {
-        doFire()
-        writeToFrameBuffer()
     }
 }

@@ -9,29 +9,38 @@
 import UIKit
 
 // https://github.com/nicklockwood/Swiftenstein
+// http://gabrieloc.com/2017/03/21/GIOVANNI.html
+
 struct Bitmap {
     let width: Int
     let height: Int
-    let colorData: [UInt8]
+    let pixels: [Color]
 }
 
-// http://gabrieloc.com/2017/03/21/GIOVANNI.html
 extension UIImage {
     convenience init?(bitmap: Bitmap) {
-        UIGraphicsBeginImageContext(CGSize(width: bitmap.width, height: bitmap.height))
-        guard let bitmapContext = CGContext(
-            data: UnsafeMutablePointer(mutating: bitmap.colorData),
+        guard let providerRef = CGDataProvider(data: NSData(
+            bytes: bitmap.pixels, length: bitmap.pixels.count * MemoryLayout<Color>.size
+        )) else {
+            return nil
+        }
+        
+        guard let cgImage = CGImage(
             width: bitmap.width,
             height: bitmap.height,
             bitsPerComponent: 8,
-            bytesPerRow: bitmap.width * 4,
+            bitsPerPixel: 32,
+            bytesPerRow: bitmap.width * MemoryLayout<Color>.size,
             space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageByteOrderInfo.order32Big.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue
-            ),
-            let cgImage = bitmapContext.makeImage()
-            else {
+            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue),
+            provider: providerRef,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+            ) else {
                 return nil
         }
+        
         self.init(cgImage: cgImage)
     }
 }
