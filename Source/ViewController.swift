@@ -104,8 +104,7 @@ class ViewController: UIViewController {
                 assertionFailure("Index out of bounds")
                 continue
             }
-            let color = colorPallete[colorIndex]
-            frameBuffer.append(color)
+            frameBuffer.append(colorPallete[colorIndex])
         }
     }
     
