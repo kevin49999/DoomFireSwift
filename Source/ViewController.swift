@@ -14,60 +14,27 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
+    let colorPallete: ColorPalette = ColorPalletes.default
     var firePixels = [Int: Int]()
     var frameBuffer = [Color]()
-    var colorPallete: [Color] = [
-        Color(r: 7, g: 7, b: 7),
-        Color(r: 31, g: 7, b:7),
-        Color(r: 47, g:15, b: 7),
-        Color(r: 71, g: 15, b: 7),
-        Color(r: 87, g: 23, b: 7),
-        Color(r: 103, g: 31, b: 7),
-        Color(r: 119, g: 31, b: 7),
-        Color(r: 143, g: 39, b: 7),
-        Color(r: 159, g: 47, b: 7),
-        Color(r: 175, g: 63, b: 7),
-        Color(r: 191, g: 71, b: 7),
-        Color(r: 199, g: 71, b: 7),
-        Color(r: 223, g: 79, b: 7),
-        Color(r: 223, g: 87, b: 7),
-        Color(r: 223, g: 87, b: 7),
-        Color(r: 215, g: 95, b: 7),
-        Color(r: 215, g: 95, b: 7),
-        Color(r: 215, g: 103, b: 15),
-        Color(r: 207, g: 111, b: 15),
-        Color(r: 207, g: 119, b: 15),
-        Color(r: 207, g: 127, b: 15),
-        Color(r: 207, g: 135, b: 23),
-        Color(r: 199, g: 135, b: 23),
-        Color(r: 199, g: 143, b: 23),
-        Color(r: 199, g: 151, b: 31),
-        Color(r: 191, g: 159, b: 31),
-        Color(r: 191, g: 159, b: 31),
-        Color(r: 191, g: 167, b: 39),
-        Color(r: 191, g: 167, b: 39),
-        Color(r: 191, g: 175, b: 47),
-        Color(r: 183, g: 175, b: 47),
-        Color(r: 183, g: 183, b: 47),
-        Color(r: 183, g: 183, b: 55),
-        Color(r: 207, g: 207, b: 111),
-        Color(r: 223, g: 223, b: 159),
-        Color(r: 239, g: 239, b: 199),
-        Color(r: 255, g: 255, b: 255)
-    ]
     lazy var fireWidth: Int = {
         return Int(fireImageView.bounds.width) / 4
     }()
     lazy var fireHeight: Int = {
         return Int(fireImageView.bounds.height) / 4
     }()
-    @IBOutlet weak var fireImageView: UIImageView!
+    @IBOutlet weak var fireImageView: UIImageView! {
+        didSet {
+            fireImageView.layer.magnificationFilter = .nearest
+
+        }
+    }
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fireImageView.layer.magnificationFilter = .nearest
+        assert(colorPallete.count == 37)
         
         setupFirePixels()
         writeToFrameBuffer()
@@ -88,7 +55,6 @@ class ViewController: UIViewController {
         for i in 0..<fireWidth * fireHeight {
             firePixels[i] = 0
         }
-        
         // "Set bottom line to 37 (color white: 0xFFFFFF)"
         for i in 0..<fireWidth {
             firePixels[(fireHeight - 1) * fireWidth + i] = 36
@@ -109,8 +75,11 @@ class ViewController: UIViewController {
     }
     
     func renderFrame() {
-        let bitmap = Bitmap(width: fireWidth, height: fireHeight, pixels: frameBuffer)
-        fireImageView.image = UIImage(bitmap: bitmap)
+        fireImageView.image = UIImage(bitmap: Bitmap(
+            width: fireWidth,
+            height: fireHeight,
+            pixels: frameBuffer
+        ))
     }
     
     // MARK: - Fire Spreading 🔥🚒
@@ -132,7 +101,7 @@ class ViewController: UIViewController {
             firePixels[src - fireWidth] = 0
             return
         }
-        let rand = Int(round(Double.random(in: 0..<1) * 3.0)) & 3
+        let rand = Int.random(in: 0...3)
         let dst = src - rand + 1
         firePixels[dst - fireWidth] = pixel - (rand & 1)
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A09854B2303ACD800BA1881 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854A2303ACD800BA1881 /* ColorPalette.swift */; };
+		0A09854D2303AE3300BA1881 /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A09854C2303AE3300BA1881 /* Bitmap.swift */; };
 		0A51C2C6227E8BE100CE000E /* UIImage+Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A51C2C5227E8BE100CE000E /* UIImage+Bitmap.swift */; };
 		0A51C2C8227E8F9B00CE000E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A51C2C7227E8F9B00CE000E /* Color.swift */; };
 		0A61179A222B77BC0058E847 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A611799222B77BC0058E847 /* AppDelegate.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A09854A2303ACD800BA1881 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		0A09854C2303AE3300BA1881 /* Bitmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitmap.swift; sourceTree = "<group>"; };
 		0A51C2C5227E8BE100CE000E /* UIImage+Bitmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Bitmap.swift"; sourceTree = "<group>"; };
 		0A51C2C7227E8F9B00CE000E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0A611796222B77BC0058E847 /* DoomFireSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoomFireSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,7 +67,9 @@
 		0A51C2C3227E5C0D00CE000E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0A09854C2303AE3300BA1881 /* Bitmap.swift */,
 				0A51C2C7227E8F9B00CE000E /* Color.swift */,
+				0A09854A2303ACD800BA1881 /* ColorPalette.swift */,
 				0A51C2C5227E8BE100CE000E /* UIImage+Bitmap.swift */,
 				0A61179B222B77BC0058E847 /* ViewController.swift */,
 			);
@@ -214,6 +220,8 @@
 				0A51C2C6227E8BE100CE000E /* UIImage+Bitmap.swift in Sources */,
 				0A61179C222B77BC0058E847 /* ViewController.swift in Sources */,
 				0A51C2C8227E8F9B00CE000E /* Color.swift in Sources */,
+				0A09854B2303ACD800BA1881 /* ColorPalette.swift in Sources */,
+				0A09854D2303AE3300BA1881 /* Bitmap.swift in Sources */,
 				0A61179A222B77BC0058E847 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

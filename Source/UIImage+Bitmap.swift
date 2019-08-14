@@ -11,12 +11,6 @@ import UIKit
 // https://github.com/nicklockwood/Swiftenstein
 // http://gabrieloc.com/2017/03/21/GIOVANNI.html
 
-struct Bitmap {
-    let width: Int
-    let height: Int
-    let pixels: [Color]
-}
-
 extension UIImage {
     convenience init?(bitmap: Bitmap) {
         guard let providerRef = CGDataProvider(data: NSData(
