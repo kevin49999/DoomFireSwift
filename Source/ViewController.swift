@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var fireImageView: UIImageView! {
         didSet {
             fireImageView.layer.magnificationFilter = .nearest
-
         }
     }
     
