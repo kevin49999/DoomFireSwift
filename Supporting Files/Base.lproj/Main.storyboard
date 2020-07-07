@@ -30,7 +30,7 @@
                         <constraints>
                             <constraint firstItem="uiq-VB-nYC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DT0-ep-aM7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uiq-VB-nYC" secondAttribute="trailing" id="XFn-fp-UyQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="uiq-VB-nYC" secondAttribute="bottom" id="XHH-Ds-Q5i"/>
+                            <constraint firstAttribute="bottom" secondItem="uiq-VB-nYC" secondAttribute="bottom" id="XHH-Ds-Q5i"/>
                             <constraint firstItem="uiq-VB-nYC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ZgG-tb-vqZ"/>
                             <constraint firstItem="o6K-r2-9Xy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="aMi-Xs-hlP"/>
                             <constraint firstItem="o6K-r2-9Xy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="zOk-jQ-joD"/>
