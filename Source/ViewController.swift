@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     var frameBuffer = [Color]()
     var runningTime: Double = 0
     lazy var fireWidth: Int = {
-        return Int(fireImageView.bounds.width) / 4
+        return Int(fireImageView.bounds.width) / 6
     }()
     lazy var fireHeight: Int = {
-        return Int(fireImageView.bounds.height) / 4
+        return Int(fireImageView.bounds.height) / 6
     }()
     @IBOutlet weak var fireImageView: UIImageView! {
         didSet {
@@ -40,8 +40,7 @@ class ViewController: UIViewController {
         setupFirePixels()
         writeToFrameBuffer()
         renderFrame()
-        
-        // 60 fps
+
         var lastFrameTime = CFAbsoluteTimeGetCurrent()
         let _ = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true, block: { _ in
             let dt = CFAbsoluteTimeGetCurrent() - lastFrameTime
