@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     let colorPallete: ColorPalette = ColorPalletes.default
     var firePixels = [Int: Int]()
     var frameBuffer = [Color]()
+    var runningTime: Double = 0
     lazy var fireWidth: Int = {
         return Int(fireImageView.bounds.width) / 4
     }()
@@ -28,7 +29,8 @@ class ViewController: UIViewController {
             fireImageView.layer.magnificationFilter = .nearest
         }
     }
-    
+    @IBOutlet weak var fpsLabel: UILabel!
+
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -40,10 +42,15 @@ class ViewController: UIViewController {
         renderFrame()
         
         // 60 fps
+        var lastFrameTime = CFAbsoluteTimeGetCurrent()
         let _ = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true, block: { _ in
+            let dt = CFAbsoluteTimeGetCurrent() - lastFrameTime
+            lastFrameTime += dt
+            self.runningTime += min(1, dt)
             self.doFire()
             self.writeToFrameBuffer()
             self.renderFrame()
+            self.fpsLabel.text = ("\(Int(1 / dt))")
         })
     }
     
