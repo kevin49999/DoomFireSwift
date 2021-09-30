@@ -1,6 +1,6 @@
 # DoomFireSwift
 
-![Screenshot](https://github.com/longhorn499/DoomFireSwift/raw/master/fire.gif)  
+![Screenshot](fire.gif)  
 
 ## :fire: :fire: :fire:
 
