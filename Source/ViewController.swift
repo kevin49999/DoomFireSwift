@@ -8,8 +8,7 @@
 
 import UIKit
 
-// http://fabiensanglard.net/doom_fire_psx/index.html 🔥
-
+// http://fabiensanglard.net/doom_fire_psx/index.html
 class ViewController: UIViewController {
     
     // MARK: - Properties
@@ -56,7 +55,7 @@ class ViewController: UIViewController {
     // MARK: - Setup
     
     func setupFirePixels() {
-        /// "Set whole screen to 0 (color: 0x070707)"
+        // "Set whole screen to 0 (color: 0x070707)"
         for i in 0..<fireWidth * fireHeight {
             firePixels[i] = 0
         }
@@ -87,7 +86,7 @@ class ViewController: UIViewController {
         ))
     }
     
-    // MARK: - Fire Spreading 🔥🚒
+    // MARK: - Fire Spreading
     
     func doFire() {
         for x in 0..<fireWidth {

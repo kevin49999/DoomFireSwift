@@ -10,7 +10,6 @@ import UIKit
 
 // https://github.com/nicklockwood/Swiftenstein
 // http://gabrieloc.com/2017/03/21/GIOVANNI.html
-
 extension UIImage {
     convenience init?(bitmap: Bitmap) {
         guard let providerRef = CGDataProvider(data: NSData(

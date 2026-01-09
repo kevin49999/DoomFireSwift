@@ -16,7 +16,6 @@
 		0A61179F222B77BC0058E847 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A61179D222B77BC0058E847 /* Main.storyboard */; };
 		0A6117A1222B77BF0058E847 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A6117A0222B77BF0058E847 /* Assets.xcassets */; };
 		0A6117A4222B77BF0058E847 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A6117A2222B77BF0058E847 /* LaunchScreen.storyboard */; };
-		0A6117AF222B77BF0058E847 /* DoomFireSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6117AE222B77BF0058E847 /* DoomFireSwiftTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +41,6 @@
 		0A6117A3222B77BF0058E847 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A6117A5222B77BF0058E847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A6117AA222B77BF0058E847 /* DoomFireSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoomFireSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A6117AE222B77BF0058E847 /* DoomFireSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoomFireSwiftTests.swift; sourceTree = "<group>"; };
-		0A6117B0222B77BF0058E847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +90,6 @@
 			children = (
 				0A51C2C3227E5C0D00CE000E /* Source */,
 				0A51C2C4227E5C1600CE000E /* Supporting Files */,
-				0A6117AD222B77BF0058E847 /* DoomFireSwiftTests */,
 				0A611797222B77BC0058E847 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,15 +101,6 @@
 				0A6117AA222B77BF0058E847 /* DoomFireSwiftTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0A6117AD222B77BF0058E847 /* DoomFireSwiftTests */ = {
-			isa = PBXGroup;
-			children = (
-				0A6117AE222B77BF0058E847 /* DoomFireSwiftTests.swift */,
-				0A6117B0222B77BF0058E847 /* Info.plist */,
-			);
-			path = DoomFireSwiftTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +217,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A6117AF222B77BF0058E847 /* DoomFireSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +405,6 @@
 		0A6117B7222B77BF0058E847 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DoomFireSwiftTests/Info.plist;
@@ -439,7 +424,6 @@
 		0A6117B8222B77BF0058E847 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DoomFireSwiftTests/Info.plist;
